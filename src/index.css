@@ -19,6 +19,7 @@ code {
   flex-direction: column;
   max-width: 1080px;
   margin: auto;
+  margin-top: 2rem;
   border-radius: 16px;
   padding: 2rem 1.9rem 2.6rem;
 }

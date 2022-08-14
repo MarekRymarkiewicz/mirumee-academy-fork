@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useQuery } from "@tanstack/react-query";
 import { gql } from "graphql-request";
 import { client } from "./graphql/client";
 import { Accordion } from "./components/Accordion";
 import { LoadingSpinner } from "./components/LoadingSpinner";
+import { Button } from "./components/Button";
 
 const containerStyles = {
   display: "flex",
@@ -19,11 +20,21 @@ interface filmProps {
 
 function App() {
   const filmList = useFilms();
-
+  useEffect(() => {filmList.refetch()},[]);
   
   return (
     <div className="appContainer">
-      {filmList.isFetching && (<LoadingSpinner></LoadingSpinner>)}
+      {filmList.isError && (
+      <div style={{padding:"1rem", backgroundColor:"white",borderRadius:"1rem"}}>
+        <h4>An error has occured while fetching data.</h4>
+        <br></br>
+        <Button variant={"error"} onClick={() => (filmList.refetch())}>Try again</Button>
+      </div>)}
+      {filmList.isFetching && (
+      <>
+        <span style={{textAlign:"center"}}>Fetching film titles...</span>
+        <LoadingSpinner></LoadingSpinner>
+      </>)}
       {filmList.data && (filmList.data.films.map((film:filmProps) => (
       <Accordion title={film.title} key={film.id}>
         <div style={{padding: "1rem 1.5rem"}}>
@@ -51,7 +62,8 @@ function useFilms() {
         `
       );
       return data.allFilms;
-    }
+    },
+    { enabled: false }
   );
 }
 
