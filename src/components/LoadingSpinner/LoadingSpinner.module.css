@@ -1,0 +1,62 @@
+@-webkit-keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes change {
+  0% {
+    stroke-dashoffset: 400%;
+  }
+  50% {
+    stroke-dashoffset: 250%;
+  }
+  100% {
+    stroke-dashoffset: 400%;
+  }
+}
+@keyframes change {
+  0% {
+    stroke-dashoffset: 400%;
+  }
+  50% {
+    stroke-dashoffset: 250%;
+  }
+  100% {
+    stroke-dashoffset: 400%;
+  }
+}
+.loadingSpinner {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  margin: 1rem;
+  box-sizing: border-box;
+  border-radius: 50%;
+  overflow: hidden;
+  -webkit-animation: spin 1.5s linear infinite;
+          animation: spin 1.5s linear infinite;
+}
+.loadingSpinner .loadingSpinnerFill {
+  fill: transparent;
+  stroke: #00687f;
+  stroke-width: 10;
+}
+.loadingSpinner .loadingSpinnerBorder {
+  -webkit-animation: change 3s ease-in-out infinite;
+          animation: change 3s ease-in-out infinite;
+  fill: none;
+  stroke: #159bb9;
+  stroke-width: 10px;
+  stroke-dasharray: 220;
+}/*# sourceMappingURL=LoadingSpinner.module.css.map */
