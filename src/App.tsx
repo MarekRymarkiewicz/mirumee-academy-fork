@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { gql } from "graphql-request";
 import { client } from "./graphql/client";
 import { Accordion } from "./components/Accordion";
+import { LoadingSpinner } from "./components/LoadingSpinner";
 
 const containerStyles = {
   display: "flex",
@@ -22,6 +23,7 @@ function App() {
   
   return (
     <div className="appContainer">
+      {filmList.isFetching && (<LoadingSpinner></LoadingSpinner>)}
       {filmList.data && (filmList.data.films.map((film:filmProps) => (
       <Accordion title={film.title} key={film.id}>
         <div style={{padding: "1rem 1.5rem"}}>
