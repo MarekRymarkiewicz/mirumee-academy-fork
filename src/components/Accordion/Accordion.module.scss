@@ -1,0 +1,47 @@
+// Elementy styling
+.accordion {
+  border-radius: 12px;
+  background-color: white;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+.accordionHead {
+  position: relative;
+  padding: 1rem 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+.accordionHead:hover {
+  background-color: #eee;
+}
+.accordionHead::after {
+  content: '';
+  display: block;
+  width: 20px; 
+  height: 20px; 
+  background-image: url("./arrow-circle.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: absolute;
+  right: 1rem;
+  top:50%;
+  transform: translateY(-50%) rotate(0deg);
+  font-weight: 1000;
+  color:#6b6b6b;
+  transition: 0.5s ease;
+	transform-style: preserve-3d;
+	backface-visibility: hidden;
+}
+.active.accordionHead::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+.accordionTitle {
+  color: #2043b3;
+}
+.accordionBody {
+  box-shadow: 0px 10px 10px #eee inset;
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: 0.5s ease;
+}
