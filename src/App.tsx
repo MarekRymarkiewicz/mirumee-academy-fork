@@ -3,6 +3,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { gql } from "graphql-request";
 import { client } from "./graphql/client";
+import { Accordion } from "./components/Accordion";
 
 const containerStyles = {
   display: "flex",
@@ -10,13 +11,23 @@ const containerStyles = {
   marginTop: "1rem",
 };
 
+interface filmProps {
+  id: string,
+  title: string,
+}
+
 function App() {
-  const { isError, data, error, refetch, isFetching } = useFilms();
+  const filmList = useFilms();
 
   
   return (
     <div className="appContainer">
-      
+      {filmList.data && (filmList.data.films.map((film:filmProps) => (
+      <Accordion title={film.title} key={film.id}>
+        <div style={{padding: "1rem 1.5rem"}}>
+        </div>
+      </Accordion>
+    )))}
     </div>
   );
 }
