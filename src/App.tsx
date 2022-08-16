@@ -3,9 +3,11 @@ import React, { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { gql } from "graphql-request";
 import { client } from "./graphql/client";
+
 import { Accordion } from "./components/Accordion";
 import { LoadingSpinner } from "./components/LoadingSpinner";
 import { Button } from "./components/Button";
+import { Table } from "./components/Table";
 
 const containerStyles = {
   display: "flex",
@@ -13,9 +15,25 @@ const containerStyles = {
   marginTop: "1rem",
 };
 
-interface filmProps {
+interface filmDetails {
   id: string,
   title: string,
+  planetConnection: planetConnectionDetails,
+}
+
+interface planetConnectionDetails {
+  planets: Array<planetDetails>,
+}
+
+interface planetDetails {
+  id: string,
+  name: string,
+  diameter: number,
+  rotationPeriod: number,
+  orbitalPeriod : number,
+  population: number,
+  climates: string | string[],
+  surfaceWater: number,
 }
 
 function App() {
@@ -35,10 +53,9 @@ function App() {
         <span style={{textAlign:"center"}}>Fetching film titles...</span>
         <LoadingSpinner></LoadingSpinner>
       </>)}
-      {filmList.data && (filmList.data.films.map((film:filmProps) => (
+      {filmList.data && (filmList.data.films.map((film:filmDetails) => (
       <Accordion title={film.title} key={film.id}>
-        <div style={{padding: "1rem 1.5rem"}}>
-        </div>
+        <Table data={film.planetConnection.planets} separateHeaderWords={true}></Table>
       </Accordion>
     )))}
     </div>
@@ -51,14 +68,26 @@ function useFilms() {
     async () => {
       const data = await client.request(
         gql`
-          query {
-            allFilms {
-              films {
-                id
-                title
+        {
+          allFilms {
+            films {
+              id
+              title
+              planetConnection {
+                planets {
+                  id
+                  name
+                  diameter
+                  rotationPeriod
+                  orbitalPeriod
+                  population
+                  climates
+                  surfaceWater
+                }
               }
             }
           }
+        }
         `
       );
       return data.allFilms;
