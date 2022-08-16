@@ -1,0 +1,119 @@
+$border-color: #eeeeee;
+$active-color: #00687f;
+$inactive-color: #474747;
+
+// Table styling
+.tableWrapper {
+  padding: 1rem 1.5rem;
+}
+.table {
+  width: 100%;
+  box-sizing: border-box;
+  border-collapse: collapse;
+  overflow: hidden;
+  font-size: 0.95rem;
+  thead {
+    border-bottom: 2px solid $border-color;
+    th {
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      position: relative;
+      text-transform: capitalize;
+    }
+    th:nth-of-type(1) {
+      color: $active-color;
+    }
+  }
+  tbody {
+    tr {
+      td {
+        padding: 0.5rem 1rem;
+        text-align: right;
+      }
+      td:nth-of-type(2) {
+        text-align: left;
+        color: $active-color;
+      }
+    }
+  }
+}
+
+// Small screen table 
+.mobileOnly {
+  display: none;
+  font-weight: bold;
+}
+@media only screen and (max-width: 992px) {
+  .tableWrapper {
+    padding: 0;
+  }
+  .table {
+    thead {
+      tr {
+        display: none;
+      }
+    }
+    tbody {
+      tr {
+        display: flex;
+        flex-flow: wrap;
+        padding: 0.5rem 0;
+        td {
+          flex: 50%;
+          display: inline-block;
+          box-sizing: border-box;
+          text-align: left;
+        }
+        td:nth-of-type(2) {
+          color: $active-color
+        }
+      }
+      tr:nth-of-type(2n) {
+        background-color: #f2f2f2;
+      }
+    }
+  }
+  .mobileOnly {
+    display: block;
+    text-transform: capitalize;
+  }
+  .mobileOnly::after {
+    content: ":";
+  }
+}
+
+// Sort arrows
+$arrow-size: 4px;
+.tableSortContainer {
+  position: absolute;
+  right: 2px;
+  top:50%;
+  transform: translateY(-50%);
+  line-height: $arrow-size;
+  margin-left: 0.5rem;
+
+  .tableSortArrow {
+    border-left: $arrow-size solid transparent;
+    border-right: $arrow-size solid transparent;
+    border-bottom: calc($arrow-size*2) solid $inactive-color;
+  }
+  .tableSortArrow:nth-of-type(2) {
+    margin-top: 2px;
+    transform: rotate(180deg);
+  }
+}
+// Change arrow on active header
+.tableActiveSortAsc {
+  .tableSortContainer {
+    .tableSortArrow:nth-of-type(1) {
+      border-bottom: calc($arrow-size*2) solid $active-color;
+    }
+  }
+}
+.tableActiveSortDesc {
+  .tableSortContainer {
+    .tableSortArrow:nth-of-type(2) {
+      border-bottom: calc($arrow-size*2) solid $active-color;
+    }
+  }
+}
