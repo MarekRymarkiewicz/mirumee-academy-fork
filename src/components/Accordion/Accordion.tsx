@@ -1,7 +1,7 @@
-import React, { PropsWithChildren, useEffect, useRef, useState } from "react";
+import React, { PropsWithChildren, useRef, useState } from "react";
 import styles from "./Accordion.module.css";
 
-interface AccordionProps {
+interface AccordionProps extends React.AllHTMLAttributes<HTMLDivElement> {
   title: string,
 }
 
@@ -9,6 +9,7 @@ export const Accordion: React.FunctionComponent<PropsWithChildren<AccordionProps
   // Open/Closed Accordion states
   const [isActive, setActive] = useState(false);
   const [bodyHeight, setBodyHeight] = useState("0px");
+  const [content, setContent] = useState(props);
 
   // Accordion style classes
   const accordionClasses = `${styles.accordion}`;
@@ -17,14 +18,11 @@ export const Accordion: React.FunctionComponent<PropsWithChildren<AccordionProps
   const accordionBodyClasses = `${styles.accordionBody}`;
 
   // Accordion Body ref hook
-  const accordionBody = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>();
 
-  // Calculate new body height on content change
-  useEffect(() => setBodyHeight(isActive? `${accordionBody.current?.scrollHeight}px` : "0px"),[children]);
-  
   // Click handler
   function handleClick(): void {
-    setBodyHeight(!isActive? `${accordionBody.current?.scrollHeight}px` : "0px");
+    setBodyHeight(!isActive? `${ref.current?.scrollHeight}px` : "0px");
     setActive(!isActive);
   }
 
@@ -37,7 +35,7 @@ export const Accordion: React.FunctionComponent<PropsWithChildren<AccordionProps
         </span>
       </div>
       {/* @ts-ignore */}
-      <div ref={accordionBody} className={accordionBodyClasses} style={{maxHeight: bodyHeight}}>
+      <div ref={ref} className={accordionBodyClasses} style={{maxHeight: bodyHeight}}>
         {children}
       </div>
     </div>
