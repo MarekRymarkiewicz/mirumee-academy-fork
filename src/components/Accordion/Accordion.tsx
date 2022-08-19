@@ -9,7 +9,6 @@ export const Accordion: React.FunctionComponent<PropsWithChildren<AccordionProps
   // Open/Closed Accordion states
   const [isActive, setActive] = useState(false);
   const [bodyHeight, setBodyHeight] = useState("0px");
-  const [content, setContent] = useState(props);
 
   // Accordion style classes
   const accordionClasses = `${styles.accordion}`;
@@ -18,7 +17,7 @@ export const Accordion: React.FunctionComponent<PropsWithChildren<AccordionProps
   const accordionBodyClasses = `${styles.accordionBody}`;
 
   // Accordion Body ref hook
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
 
   // Click handler
   function handleClick(): void {
@@ -34,7 +33,6 @@ export const Accordion: React.FunctionComponent<PropsWithChildren<AccordionProps
           {title}
         </span>
       </div>
-      {/* @ts-ignore */}
       <div ref={ref} className={accordionBodyClasses} style={{maxHeight: bodyHeight}}>
         {children}
       </div>
