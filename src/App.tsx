@@ -38,7 +38,6 @@ interface planetDetails {
 
 function App() {
   const filmList = useFilms();
-  useEffect(() => {filmList.refetch()},[]);
   
   return (
     <div className="appContainer">
@@ -92,7 +91,8 @@ function useFilms() {
       );
       return data.allFilms;
     },
-    { enabled: false }
+    { enabled: true,
+      refetchOnWindowFocus: false }
   );
 }
 
