@@ -14,16 +14,22 @@ interface TableCell {
 }
 
 // Table styles
-const TableClasses = `${styles.table}`;
+const tableClasses = `${styles.table}`;
+const tableHeadClasses = `${styles.tableHead}`;
+// const tableBodyClasses = `${styles.tableBody}`;
+const tableRowClasses = `${styles.tableRow}`;
+const tableCellClasses = `${styles.tableCell}`;
+const tableHeaderClasses = `${styles.tableHeader}`;
+// const Classes = `${styles.}`;
 // Table wrapper styles
-const TableWrapperClasses = `${styles.tableWrapper}`
+const tableWrapperClasses = `${styles.tableWrapper}`
 // Table sort arrow styles
-const TableSortContainerClasses = `${styles.tableSortContainer}`
-const TableSortArrowClasses = `${styles.tableSortArrow}`
-const TableActiveSortAscClasses = `${styles.tableActiveSortAsc}`
-const TableActiveSortDescClasses = `${styles.tableActiveSortDesc}`
+const tableSortContainerClasses = `${styles.tableSortContainer}`
+const tableSortArrowClasses = `${styles.tableSortArrow}`
+const tableActiveSortAscClasses = `${styles.tableActiveSortAsc}`
+const tableActiveSortDescClasses = `${styles.tableActiveSortDesc}`
 // Responsive classes
-const MobileOnlyClasses = `${styles.mobileOnly}`
+const MobileOnlyClasses = `${styles.tableCell} ${styles.mobileOnly}`
 
 export const Table: React.FunctionComponent<TableProps> = ({ data, showKeyColumn=false, separateHeaderWords=false, ...props }) => {
   // Array of all keys in data
@@ -96,16 +102,16 @@ export const Table: React.FunctionComponent<TableProps> = ({ data, showKeyColumn
   }
 
   return (
-    <div className={TableWrapperClasses}>
-      <table className={TableClasses} {...props}>
-        <thead>
-          <tr key={"headerRow"}>
+    <div className={tableWrapperClasses}>
+      <table className={tableClasses} {...props}>
+        <thead className={tableHeadClasses}>
+          <tr key={"headerRow"} className={tableRowClasses}>
             <>
             {headers.map((header) => (
-            <th key={header} onClick={()=>(handleHeaderClick(header))} className={header===tableData.sortBy? (tableData.sortAsc?TableActiveSortAscClasses:TableActiveSortDescClasses) : ""}>
+            <th key={header} onClick={()=>(handleHeaderClick(header))} className={`${tableHeaderClasses} ${header===tableData.sortBy? (tableData.sortAsc?tableActiveSortAscClasses:tableActiveSortDescClasses) : ""}`}>
               {separateWords(header)}
-              <div className={TableSortContainerClasses}>
-                <div className={TableSortArrowClasses}></div><div className={TableSortArrowClasses}></div>
+              <div className={tableSortContainerClasses}>
+                <div className={tableSortArrowClasses}></div><div className={tableSortArrowClasses}></div>
               </div>
             </th>))}
             </>
@@ -113,11 +119,11 @@ export const Table: React.FunctionComponent<TableProps> = ({ data, showKeyColumn
         </thead>
         <tbody>
         {tableData.data.map((row, index) => (
-          <tr key={index}>
+          <tr key={index} className={tableRowClasses}>
             {row.map((col,colIndex) => (
               <React.Fragment key={`cellgroup:${colIndex}`}>
               <td key={colIndex} className={MobileOnlyClasses}>{separateWords(headers[colIndex])}</td>
-              <td key={col.key}>
+              <td key={col.key} className={tableCellClasses}>
                 {Array.isArray(col.value)? col.value.join(", ") : col.value}
               </td>
               </React.Fragment>
